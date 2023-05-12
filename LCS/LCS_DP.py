@@ -1,0 +1,40 @@
+import time
+	
+def lcs(X, Y, m, n):
+    L = [[None]*(n+1) for i in range(m+1)]	
+    for i in range(m+1):
+        for j in range(n+1) :
+            if (i == 0 or j == 0) :
+                L[i][j] = 0
+            elif (X[i - 1] == Y[j - 1]):
+                L[i][j] = L[i - 1][j - 1] + 1
+            else:
+                L[i][j] = max(L[i - 1][j], L[i][j - 1])
+    return L[m][n]
+	
+def readFile(file):
+    lines = []
+    with open(file) as f:
+        lines= f.readlines()
+    return lines 
+
+fileName = "LCS1.txt"
+strings = readFile(fileName)
+t = []
+for i in range(0, len(strings), 1): 
+    inputStrings = strings[i].split(",")
+    if(len(inputStrings) > 0):
+        start_time = time.perf_counter()
+    
+        length = lcs(inputStrings[0], inputStrings[1], len(inputStrings[0]), len(inputStrings[1]))
+        end_time = time.perf_counter()
+        print()
+        print("##########################################################")
+        print("Length of the Longest common Subsequence of Strings {} & {} is {} ".format(inputStrings[0], inputStrings[1], length))
+        print("Time taken to find length of longest common subsequence is : {} seconds".format(end_time-start_time))
+        t.append(end_time-start_time)
+        print("##########################################################")
+        print()
+
+for i in range (0, len(t), 1):
+    print(t[i])
